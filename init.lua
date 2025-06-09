@@ -110,11 +110,11 @@ vim.opt.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
-vim.opt.tabstop = 4 -- A tab displays as 4 spaces
-vim.opt.shiftwidth = 4 -- Indents (>>/<<) use 4 spaces
-vim.opt.softtabstop = 4 -- Tab key press equals 4 spaces
-vim.opt.expandtab = false
-vim.o.smartindent = true
+-- vim.opt.tabstop = 4 -- A tab displays as 4 spaces
+-- vim.opt.shiftwidth = 4 -- Indents (>>/<<) use 4 spaces
+-- vim.opt.softtabstop = 4 -- Tab key press equals 4 spaces
+-- vim.opt.expandtab = false
+-- vim.o.smartindent = true
 
 vim.opt.termguicolors = true
 
@@ -254,7 +254,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 
-  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -678,7 +678,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -688,7 +688,20 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {
+          init_options = {
+            plugins = {
+              {
+                name = "@vue/typescript-plugin",
+                location = "/usr/local/lib/node_modules/@vue/language-server",
+                languages = { "vue" },
+              },
+            },
+          },
+          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+        },
+        volar = {},
+        eslint = {},
         --
 
         lua_ls = {
@@ -980,6 +993,7 @@ require('lazy').setup({
   require 'kickstart.plugins.snacks',
   require 'kickstart.plugins.noice',
   require 'kickstart.plugins.lualine',
+  -- require 'kickstart.plugins.markdown-preview',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
