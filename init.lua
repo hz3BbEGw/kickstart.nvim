@@ -678,7 +678,9 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          filetypes = { 'cpp', 'c', 'cu'},
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -688,19 +690,19 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
+        vue_ls = {},
         ts_ls = {
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
           init_options = {
             plugins = {
               {
-                name = "@vue/typescript-plugin",
-                location = "/usr/local/lib/node_modules/@vue/language-server",
-                languages = { "vue" },
+                name = '@vue/typescript-plugin',
+                location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                languages = { 'vue' },
               },
             },
           },
-          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
         },
-        volar = {},
         eslint = {},
         --
 
